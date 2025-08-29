@@ -45,31 +45,55 @@ urlShortener/
 ```mermaid
 classDiagram
     class Controller {
-        +encurtarUrl()
-        +redirecionarUrl()
+        -Repo repository
+        -ServiceProduto service
+        +findByIdModel(Long id) ResponseEntity<Model>
+        +findAllModel() List<Model>
+        +createModel(Dto model)
+        +deleteById(Long id) ResponseEntity<Model>
+        +modifyModel(Long id, Dto novoModel) ResponseEntity<Model>
     }
-    class ServiceProduto {
-        +gerarUrlCurta()
-        +buscarUrlOriginal()
-    }
-    class Repository {
-        +save()
-        +findByShortUrl()
-    }
-    class Model {
-        -id
-        -originalUrl
-        -shortUrl
-    }
+    
     class Dto {
-        -originalUrl
-        -shortUrl
+        -int preso
+        -String Produto
+        +toModel() Model
     }
-    Controller --> ServiceProduto
-    ServiceProduto --> Repository
-    Repository --> Model
-    Controller --> Dto
-    ServiceProduto --> Dto
+    
+    class Model {
+        -Long id
+        -String produto
+        -int preso
+        +Model(int preso, String produto)
+        +getId() Long
+        +setId(Long id)
+        +getPreso() int
+        +setPreso(int preso)
+        +getProduto() String
+        +setProduto(String produto)
+    }
+    
+    class Repo {
+        <<Interface>>
+        +JpaRepository~Model, Long~
+    }
+    
+    class ServiceProduto {
+        -Repo repository
+        +getById(Long id) Model
+        +update(Long id, Dto dto) ResponseEntity<Model>
+    }
+    
+    class UrlShortenerApplication {
+        +main(String[] args)
+    }
+    
+    Controller --> ServiceProduto : uses
+    Controller --> Repo : uses
+    ServiceProduto --> Repo : uses
+    Dto --> Model : converts to
+    Repo ..|> JpaRepository : extends
+    Repo --> Model : manages
 ```
 
 ## How to Run
