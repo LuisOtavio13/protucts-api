@@ -47,7 +47,7 @@ public class ServiceProduto {
     public ResponseEntity<Model> update(Long id, Dto dto) {
         return repository.findById(id).map(existingModel -> {
             existingModel.setPreso(dto.preso());
-            existingModel.setProduto(dto.Produto());
+            existingModel.setProduto(dto.produto());
             repository.save(existingModel);
             return ResponseEntity.ok(existingModel);
         }).orElse(ResponseEntity.notFound().build());

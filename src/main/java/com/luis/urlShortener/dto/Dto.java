@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
  * @param preso   the integer value representing the 'preso' field; must not be null
  * @param Produto the string value representing the 'Produto' field; must not be blank
  */
-public record Dto(@NotNull int preso, @NotBlank String Produto) {
+public record Dto(@NotNull int preso, @NotBlank String produto) {
 
     /**
      * Converts this DTO into a Model entity.
@@ -20,6 +20,6 @@ public record Dto(@NotNull int preso, @NotBlank String Produto) {
      * @return a new Model instance based on the DTO fields
      */
     public Model toModel() {
-        return new Model(this.preso, this.Produto);
+        return new Model(this.preso, this.produto);
     }
 }
